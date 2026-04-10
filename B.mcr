@@ -47,7 +47,7 @@ Keyboard : W : KeyDown
 Keyboard : AltLeft : KeyUp
 Keyboard : W : KeyUp
 DELAY : 5000
-Mouse : 1176 : 60 : Click : 0 : 0 : 0
+Mouse : 1215 : 60 : Click : 0 : 0 : 0
 LABEL : Click Task 4
 IF WINDOW EXISTS : AdsPower* : 0
 GOTO : Click Task loop
