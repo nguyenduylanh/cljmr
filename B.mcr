@@ -37,7 +37,6 @@ Keyboard : Enter : KeyPress
 DELAY : 20000 : 1 : 10000
 REPEAT : 0 : 0 : 0 : Enter the number of iterations: : 1 : 5
 LABEL : fake hanh vi
-RUN CSHARP : using System;{#crlf#}using System.Runtime.InteropServices;{#crlf#}using System.Threading;{#crlf#}{#crlf#}public class Program{#crlf#}{{#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern void mouse_event(uint dwFlags, int dx, int dy, int dwData, UIntPtr dwExtraInfo);{#crlf#}    {#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);{#crlf#}{#crlf#}    const uint MOUSEEVENTF_WHEEL = 0x0800;{#crlf#}    const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;{#crlf#}    const uint MOUSEEVENTF_RIGHTUP = 0x0010;{#crlf#}    const uint MOUSEEVENTF_LEFTDOWN = 0x0002;{#crlf#}    const uint MOUSEEVENTF_LEFTUP = 0x0004;{#crlf#}    const byte VK_ESCAPE = 0x1B;{#crlf#}    const uint KEYEVENTF_KEYUP = 0x0002;{#crlf#}{#crlf#}    public static void Main(){#crlf#}    {{#crlf#}        Random rnd = new Random();{#crlf#}        {#crlf#}        // 1. CUỘN CHUỘT NGẪU NHIÊN (Phá Soft Ban Bing){#crlf#}        int scrollSteps = rnd.Next(3, 7);{#crlf#}        for (int i = 0; i < scrollSteps; i++){#crlf#}        {{#crlf#}            int delta = rnd.Next(0, 2) == 0 ? -120
 DELAY : 15000 : 1 : 5000
 ENDREPEAT
 ENDREPEAT
