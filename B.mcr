@@ -143,4 +143,4 @@ Keyboard : W : KeyDown
 Keyboard : ControlLeft : KeyUp
 Keyboard : W : KeyUp
 DELAY : 4000
-GOTO : Random surf
+GOTO : CLICK KINH LUP
