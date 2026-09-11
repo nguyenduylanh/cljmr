@@ -15,7 +15,7 @@ DELAY : 20000 : 1 : 5000
 ENDIF
 LABEL : Click open profile
 DELAY : 2000
-RUN CSHARP : using System;{#crlf#}using System.Threading;{#crlf#}using System.Runtime.InteropServices;{#crlf#}using System.IO;{#crlf#}{#crlf#}public class Program{#crlf#}{{#crlf#}    // Windows API để di chuyển chuột và click{#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern bool SetCursorPos(int X, int Y);{#crlf#}{#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);{#crlf#}{#crlf#}    const uint MOUSEEVENTF_LEFTDOWN = 0x0002;{#crlf#}    const uint MOUSEEVENTF_LEFTUP   = 0x0004;{#crlf#}{#crlf#}    public static void Main(){#crlf#}    {{#crlf#}        // ---- CHỈNH TỌA ĐỘ Ở ĐÂY ----{#crlf#}        int[,] coords = new int[,] {{#crlf#}            {1155, 282},  // Tọa độ 1{#crlf#}            {1155, 340},  // Tọa độ 2{#crlf#}        };{#crlf#}{#crlf#}        // ---- File dùng để lưu index (không phụ thuộc Macro) ----{#crlf#}        string fn = Path.Combine(Path.GetTempPath(), "jitbit_click_index.txt");{#crlf#}{#crlf#}        int index = 0;{#crlf#}        try{#crlf#}        {{#crlf#}            if (File.Exists(fn)){#crlf#}            {{#crlf#}                string s = File.ReadAllText(fn).Trim();{#crlf#}                if (!string.IsNullOrEmpty(s)){#crlf#}                {{#crlf#}                    int tmp;{#crlf#}                    if (Int32.TryParse(s, out tmp)){#crlf#}                    {{#crlf#}                        index = tmp;{#crlf#}                    }{#crlf#}                }{#crlf#}            }{#crlf#}        }{#crlf#}        catch{#crlf#}        {{#crlf#}            index = 0;{#crlf#}        }{#crlf#}{#crlf#}        // bảo đảm index hợp lệ{#crlf#}        if (index < 0 || index >= coords.GetLength(0)) index = 0;{#crlf#}{#crlf#}        // thực hiện di chuyển và click tại tọa độ hiện tại{#crlf#}        int x = coords[index, 0];{#crlf#}        int y = coords[index, 1];{#crlf#}{#crlf#}        SetCursorPos(x, y);{#crlf#}        Thread.Sleep(100);                    // đợi chuột ổn định{#crlf#}        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);{#crlf#}        Thread.Sleep(50);{#crlf#}        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);{#crlf#}{#crlf#}        // cập nhật index cho lần sau{#crlf#}        index++;{#crlf#}        if (index >= coords.GetLength(0)) index = 0;{#crlf#}{#crlf#}        try{#crlf#}        {{#crlf#}            File.WriteAllText(fn, index.ToString());{#crlf#}        }{#crlf#}        catch{#crlf#}        {{#crlf#}            // nếu không ghi được file thì bỏ qua{#crlf#}        }{#crlf#}    }{#crlf#}}
+OPEN FILE : C:\Users\Administrator\Downloads\files (3)\ads_random_open.bat :  : 0
 DELAY : 30000 : 1 : 5000
 IF WINDOW EXISTS : Mozilla* : 0
 GOTO : CLICK KINH LUP
@@ -24,19 +24,15 @@ GOTO : Open profile 4
 ENDIF
 LABEL : CLICK KINH LUP
 Keyboard : AltLeft : KeyDown
-Keyboard : W : KeyDown
+Keyboard : ShiftLeft : KeyDown
+Keyboard : F2 : KeyDown
 Keyboard : AltLeft : KeyUp
-Keyboard : W : KeyUp
+Keyboard : ShiftLeft : KeyUp
+Keyboard : F2 : KeyUp
 DELAY : 5000
 Mouse : 1215 : 60 : Click : 0 : 0 : 0
-LABEL : Click Task 4
-IF WINDOW EXISTS : AdsPower* : 0
-GOTO : Click Task loop
-ELSE
-GOTO : Open profile 4
-ENDIF
 LABEL : Click Task loop
-REPEAT : 3 : 0 : 0 : Enter the number of iterations: : 0 : 0
+REPEAT : 0 : 0 : 0 : Enter the number of iterations: : 1 : 5
 DELAY : 20000 : 1 : 5000
 Mouse : 1102 : 815 : Click : 0 : 0 : 0
 DELAY : 25000 : 1 : 5000
@@ -53,22 +49,46 @@ Keyboard : ControlLeft : KeyUp
 Keyboard : W : KeyUp
 DELAY : 4000 : 1 : 2000
 LABEL : Close profile 4
-Mouse : 1254 : 28 : Click : 0 : 0 : 0
+Keyboard : AltLeft : KeyDown
+Keyboard : F4 : KeyDown
+Keyboard : AltLeft : KeyUp
+Keyboard : F4 : KeyUp
 DELAY : 20000 : 1 : 5000
 LABEL : Giai phong Ram
 OPEN FILE : C:\Users\Administrator\Documents\RAMMap\RAMMap.exe : -Ew : 1
-DELAY : 300000 : 1 : 60000
-LABEL : Run Bat restart jmr
-DELAY : 10000 : 1 : 5000
-OPEN FILE : C:\Users\Administrator\Documents\jmrrestart.bat :  : 1
+DELAY : 120000 : 1 : 300000
+GOTO : Click open profile
 LABEL : Do Task 4
+IF WINDOW EXISTS : Google* : 0
+Keyboard : ControlRight : KeyDown
+Keyboard : K : KeyDown
+Keyboard : ControlRight : KeyUp
+Keyboard : K : KeyUp
+DELAY : 2000 : 1 : 2000
 Keyboard : ControlLeft : KeyDown
 Keyboard : V : KeyDown
 Keyboard : ControlLeft : KeyUp
 Keyboard : V : KeyUp
 DELAY : 2000 : 1 : 1000
 Keyboard : Enter : KeyPress
-DELAY : 20000 : 1 : 2000
+DELAY : 10000 : 1 : 5000
+ELSE
+Keyboard : ControlRight : KeyDown
+Keyboard : A : KeyDown
+Keyboard : ControlRight : KeyUp
+Keyboard : A : KeyUp
+DELAY : 2000 : 1 : 2000
+TYPE TEXT : @bing
+Keyboard : Space : KeyPress
+DELAY : 2000 : 1 : 2000
+Keyboard : ControlLeft : KeyDown
+Keyboard : V : KeyDown
+Keyboard : ControlLeft : KeyUp
+Keyboard : V : KeyUp
+DELAY : 2000 : 1 : 1000
+Keyboard : Enter : KeyPress
+DELAY : 10000 : 1 : 5000
+ENDIF
 IF WINDOW EXISTS : Google* : 0
 GOTO : Google 4
 ELSE
@@ -83,25 +103,20 @@ DELAY : 5000 : 1 : 3000
 ELSE
 DELAY : 3000
 ENDIF
-REPEAT : 40 : 0 : 0 : Enter the number of iterations: : 0 : 0
+REPEAT : 20 : 0 : 0 : Enter the number of iterations: : 0 : 0
 IF IMAGE : Qk1uDgAAAAAAADYAAAAoAAAARgAAAA0AAAABACAAAAAAAAAAAAAlFgAAJRYAAAAAAAAAAAAAkpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/w== : 1 : 45 : 0 : 65;79;179;910
-Mouse : C0 : C0 : Move : 0 : 0 : 5
+Mouse : C0 : C0 : Move : 0 : 0 : 0
 DELAY : 2000 : 1 : 2000
 Mouse : C0 : C0 : LeftButtonDown : 0 : 0 : 0
 DELAY : 40 : 1 : 120
 Mouse : C0 : C0 : LeftButtonUp : 0 : 0 : 0
-DELAY : 20000 : 1 : 5000
-FIND PIXEL : 16776960 : 0 : 0 : 0 : 0 : 0 : 0
-Mouse : C0 : C0 : Move : 0 : 0 : 5
-DELAY : 2000 : 1 : 2000
-Mouse : C0 : C0 : LeftButtonDown : 0 : 0 : 0
-DELAY : 40 : 1 : 120
-Mouse : C0 : C0 : LeftButtonUp : 0 : 0 : 0
+DELAY : 20000 : 1 : 10000
+Keyboard : F2 : KeyPress
 DELAY : 60000 : 1 : 10000
 GOTO : no found 4
 ELSE
-RUN CSHARP : using System;{#crlf#}using System.Runtime.InteropServices;{#crlf#}using System.Threading;{#crlf#}{#crlf#}public class Program{#crlf#}{{#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);{#crlf#}{#crlf#}    const int MOUSEEVENTF_WHEEL = 0x0800;{#crlf#}{#crlf#}    public static void Main(){#crlf#}    {{#crlf#}        Random r = new Random();{#crlf#}{#crlf#}        // số wheel trong một burst{#crlf#}        int steps = r.Next(4,7); // 4–6 lần{#crlf#}{#crlf#}        for(int i=0;i<steps;i++){#crlf#}        {{#crlf#}            int delta = r.Next(-150,-90); // wheel xuống{#crlf#}            mouse_event(MOUSEEVENTF_WHEEL,0,0,delta,0);{#crlf#}{#crlf#}            Thread.Sleep(r.Next(60,140));{#crlf#}        }{#crlf#}{#crlf#}        // 12% xác suất scroll lên nhẹ{#crlf#}        if(r.Next(0,100) < 12){#crlf#}        {{#crlf#}            int up = r.Next(40,80);{#crlf#}            mouse_event(MOUSEEVENTF_WHEEL,0,0,up,0);{#crlf#}        }{#crlf#}    }{#crlf#}}
-DELAY : 3000 : 1 : 2000
+Keyboard : PageDOWN : KeyPress
+DELAY : 5000 : 1 : 2000
 ENDIF
 ENDREPEAT
 GOTO : no found 4
@@ -114,25 +129,20 @@ ELSE
 GOTO : Bing 4.1
 ENDIF
 LABEL : Bing 4.1
-REPEAT : 40 : 0 : 0 : Enter the number of iterations: : 0 : 0
+REPEAT : 20 : 0 : 0 : Enter the number of iterations: : 0 : 0
 IF IMAGE : Qk22FgAAAAAAADYAAAAoAAAAMAAAAB4AAAABACAAAAAAAAAAAAAlFgAAJRYAAAAAAAAAAAAAkpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku//kpLv/5KS7/+Sku// : 1 : 45 : 0 : 
-Mouse : C0 : C0 : Move : 0 : 0 : 5
+Mouse : C0 : C0 : Move : 0 : 0 : 0
 DELAY : 2000 : 1 : 2000
 Mouse : C0 : C0 : LeftButtonDown : 0 : 0 : 0
 DELAY : 40 : 1 : 120
 Mouse : C0 : C0 : LeftButtonUp : 0 : 0 : 0
-DELAY : 20000 : 1 : 5000
-FIND PIXEL : 16776960 : 0 : 0 : 0 : 0 : 0 : 0
-Mouse : C0 : C0 : Move : 0 : 0 : 5
-DELAY : 2000 : 1 : 2000
-Mouse : C0 : C0 : LeftButtonDown : 0 : 0 : 0
-DELAY : 40 : 1 : 120
-Mouse : C0 : C0 : LeftButtonUp : 0 : 0 : 0
+DELAY : 20000 : 1 : 10000
+Keyboard : F2 : KeyPress
 DELAY : 60000 : 1 : 10000
 GOTO : no found 4
 ELSE
-RUN CSHARP : using System;{#crlf#}using System.Runtime.InteropServices;{#crlf#}using System.Threading;{#crlf#}{#crlf#}public class Program{#crlf#}{{#crlf#}    [DllImport("user32.dll")]{#crlf#}    static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);{#crlf#}{#crlf#}    const int MOUSEEVENTF_WHEEL = 0x0800;{#crlf#}{#crlf#}    public static void Main(){#crlf#}    {{#crlf#}        Random r = new Random();{#crlf#}{#crlf#}        // số wheel trong một burst{#crlf#}        int steps = r.Next(4,7); // 4–6 lần{#crlf#}{#crlf#}        for(int i=0;i<steps;i++){#crlf#}        {{#crlf#}            int delta = r.Next(-150,-90); // wheel xuống{#crlf#}            mouse_event(MOUSEEVENTF_WHEEL,0,0,delta,0);{#crlf#}{#crlf#}            Thread.Sleep(r.Next(60,140));{#crlf#}        }{#crlf#}{#crlf#}        // 12% xác suất scroll lên nhẹ{#crlf#}        if(r.Next(0,100) < 12){#crlf#}        {{#crlf#}            int up = r.Next(40,80);{#crlf#}            mouse_event(MOUSEEVENTF_WHEEL,0,0,up,0);{#crlf#}        }{#crlf#}    }{#crlf#}}
-DELAY : 3000 : 1 : 2000
+Keyboard : PageDOWN : KeyPress
+DELAY : 5000 : 1 : 2000
 ENDIF
 ENDREPEAT
 LABEL : no found 4
@@ -142,13 +152,15 @@ Keyboard : ControlLeft : KeyUp
 Keyboard : NumPad1 : KeyUp
 DELAY : 4000 : 1 : 1000
 Keyboard : ControlLeft : KeyDown
-Keyboard : NumPad3 : KeyDown
+Keyboard : NumPad2 : KeyDown
 Keyboard : ControlLeft : KeyUp
-Keyboard : NumPad3 : KeyUp
+Keyboard : NumPad2 : KeyUp
 DELAY : 2000 : 1 : 1000
-Keyboard : ControlLeft : KeyDown
-Keyboard : W : KeyDown
-Keyboard : ControlLeft : KeyUp
-Keyboard : W : KeyUp
+Keyboard : AltLeft : KeyDown
+Keyboard : ShiftLeft : KeyDown
+Keyboard : F2 : KeyDown
+Keyboard : AltLeft : KeyUp
+Keyboard : ShiftLeft : KeyUp
+Keyboard : F2 : KeyUp
 DELAY : 4000
 GOTO : CLICK KINH LUP
