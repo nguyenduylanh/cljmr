@@ -7,7 +7,7 @@ DELAY : 20000
 SWITCH TO WINDOW : AdsPower* : 0
 DELAY : 3000
 LABEL : Adspower open confirmed
-IF WINDOW EXISTS : Adspower* : 0
+IF WINDOW EXISTS : AdsPower* : 0
 GOTO : Click open profile
 ELSE
 OPEN FILE : C:\Program Files\AdsPower Global\AdsPower Global.exe :  : 0
