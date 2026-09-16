@@ -22,11 +22,6 @@ Keyboard : W : KeyDown
 Keyboard : AltLeft : KeyUp
 Keyboard : W : KeyUp
 DELAY : 3000 : 1 : 2000
-IF WINDOW EXISTS : Mozilla* : 0
-GOTO : CLICK KINH LUP
-ELSE
-GOTO : Open profile 4
-ENDIF
 LABEL : CLICK KINH LUP
 Keyboard : AltLeft : KeyDown
 Keyboard : ShiftLeft : KeyDown
