@@ -17,6 +17,11 @@ LABEL : Click open profile
 DELAY : 2000
 OPEN FILE : C:\Users\Administrator\Downloads\files (3)\ads_random_open.bat :  : 0
 DELAY : 30000 : 1 : 5000
+Keyboard : AltLeft : KeyDown
+Keyboard : W : KeyDown
+Keyboard : AltLeft : KeyUp
+Keyboard : W : KeyUp
+DELAY : 3000 : 1 : 2000
 IF WINDOW EXISTS : Mozilla* : 0
 GOTO : CLICK KINH LUP
 ELSE
